@@ -1,4 +1,4 @@
-latch_controllers:
+latch_controller:
     lda #$01
     sta $4016
     lda #$00
@@ -8,6 +8,8 @@ latch_controllers:
     sta $4017
     lda #$01
     sta $4017
+
+.proc Controller1
 
     ; skip controller readings
     lda $4016   ; A
@@ -16,7 +18,7 @@ latch_controllers:
     lda $4016   ; START
 
 read_up:
-    check_controller
+    check_controller $4016
     beq read_up_done
 
     dec Player1::y_pos
@@ -24,7 +26,7 @@ read_up:
 read_up_done:
 
 read_down:
-    check_controller
+    check_controller $4016
     beq read_down_done
 
     inc Player1::y_pos
@@ -33,7 +35,7 @@ read_down_done:
 
 read_left:
 
-    check_controller
+    check_controller $4016
     beq read_left_done
 
     dec Player1::x_pos
@@ -42,14 +44,15 @@ read_left_done:
 
 read_right:
 
-    check_controller
+    check_controller $4016
     beq read_right_done
 
     inc Player1::x_pos
 
 read_right_done:
+.endproc
 
-latch_controller2:
+.proc Controller2
 
     ; skip controller readings
     lda $4017   ; A
@@ -57,32 +60,33 @@ latch_controller2:
     lda $4017   ; SELECT
     lda $4017   ; START
 
-read_up_2:
-    check_controller2
-    beq read_up_done_2
+read_up:
+    check_controller $4017
+    beq read_up_done
 
     dec Player2::y_pos
 
-read_up_done_2:
+read_up_done:
 
-read_down_2:
-    check_controller2
-    beq read_down_done_2
+read_down:
+    check_controller $4017
+    beq read_down_done
 
     inc Player2::y_pos
 
-read_down_done_2:
+read_down_done:
 
-read_left_2:
-    check_controller2
-    beq read_left_done_2
+read_left:
+    check_controller $4017
+    beq read_left_done
     dec Player2::x_pos
 
-read_left_done_2:
+read_left_done:
 
-read_right_2:
-    check_controller2
-    beq read_right_done_2
+read_right:
+    check_controller $4017
+    beq read_right_done
     inc Player2::x_pos
 
-read_right_done_2:
+read_right_done:
+.endproc

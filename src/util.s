@@ -12,12 +12,7 @@
     sta spr_location, x
 .endmacro
 
-.macro check_controller
-    lda $4016
-    and #%00000001
-.endmacro
-
-.macro check_controller2
-    lda $4017
+.macro check_controller ctrl_location
+    lda ctrl_location
     and #%00000001
 .endmacro
