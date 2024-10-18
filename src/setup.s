@@ -60,3 +60,13 @@ setup_sprite_data:
 setup_background:
     lda #$12
     sta $2007
+
+; ZEROPAGE
+setup_zeropage:
+    ldx #$00
+    stx $00
+    ZERO = $00
+
+    ldx #$08
+    stx $01
+    EIGHT = $01

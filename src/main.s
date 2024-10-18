@@ -22,36 +22,41 @@
 
 init_player:
 .struct Player1
-    .org    $0000
+    .org    $0010
     x_pos   .byte
     y_pos   .byte
+    x_speed .byte
+    shifted_speed   .byte
 .endstruct
 
-.struct Player2
-    .org    $0002
-    x_pos   .byte
-    y_pos   .byte
-.endstruct
-
-    lda #$08
+    lda EIGHT
     sta Player1::x_pos
-    sta Player1::y_pos
+
+    lda ZERO
+    sta Player1::x_speed
 
     lda #$80
-    sta Player2::x_pos
-    sta Player2::y_pos
+    sta Player1::y_pos
 
 forever:
     jmp forever
 
 nmi:
-    lda #$00
+    lda ZERO
     sta $2003   ; set the low byte (00) of the RAM address
     lda #$02
     sta $4014   ; set the high byte (02) of the RAM address, start the transfer
 
-    draw_sprite #$00, Player1::x_pos, Player1::y_pos, #$00, $0200
-    draw_sprite #$00, Player2::x_pos, Player2::y_pos, #$00, $0204
+    lda Player1::x_speed
+    and #%01110000
+    sta Player1::shifted_speed
+    ldx #$04
+    ror Player1::shifted_speed, x
+    ldx Player1::shifted_speed
+    adc Player1::x_pos, x
+    clc
+
+    draw_sprite ZERO, Player1::x_pos, Player1::y_pos, ZERO, $0200
 
 .include "controller.s"
 

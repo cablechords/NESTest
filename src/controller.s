@@ -16,77 +16,16 @@ latch_controller:
     lda $4016   ; B
     lda $4016   ; SELECT
     lda $4016   ; START
-
-read_up:
-    check_controller $4016
-    beq read_up_done
-
-    dec Player1::y_pos
-
-read_up_done:
-
-read_down:
-    check_controller $4016
-    beq read_down_done
-
-    inc Player1::y_pos
-
-read_down_done:
-
-read_left:
-
-    check_controller $4016
-    beq read_left_done
-
-    dec Player1::x_pos
-
-read_left_done:
+    lda $4016   ; UP
+    lda $4016   ; DOWN
+    lda $4016   ; LEFT
 
 read_right:
 
     check_controller $4016
     beq read_right_done
 
-    inc Player1::x_pos
-
-read_right_done:
-.endproc
-
-.proc Controller2
-
-    ; skip controller readings
-    lda $4017   ; A
-    lda $4017   ; B
-    lda $4017   ; SELECT
-    lda $4017   ; START
-
-read_up:
-    check_controller $4017
-    beq read_up_done
-
-    dec Player2::y_pos
-
-read_up_done:
-
-read_down:
-    check_controller $4017
-    beq read_down_done
-
-    inc Player2::y_pos
-
-read_down_done:
-
-read_left:
-    check_controller $4017
-    beq read_left_done
-    dec Player2::x_pos
-
-read_left_done:
-
-read_right:
-    check_controller $4017
-    beq read_right_done
-    inc Player2::x_pos
+    inc Player1::x_speed
 
 read_right_done:
 .endproc
